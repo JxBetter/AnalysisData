@@ -1,0 +1,18 @@
+# coding=utf-8
+import pymysql
+import numpy
+import pandas
+from matplotlib import pylab
+
+conncet = pymysql.connect(host='127.0.0.1',user='root',passwd='sqlgujinxin',db='tb')
+sql = 'select * from taob;'
+data = pandas.read_sql(sql,conncet)
+
+price = data['price'].copy()
+comment = data['comment'].copy()
+price[(price > 1000) | (price == 0)] = 36
+comment[(comment > 10000)] = 58
+# pylab.plot(price.values,comment.values,'o')
+pylab.hist(price,bins=100)
+pylab.show()
+
